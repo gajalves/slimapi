@@ -9,20 +9,43 @@
     $app = new Slim\App;
     
     //padrao psr7
-
-    $app->get('/postagens', function(Request $request, Response $response){
-        
+    $app->get('/postagens', function(Request $request, Response $response){       
         $response->getBody()->write("lista essa porra");        
         return $response;
     });
+    
+    //http methods
+    $app->get('/posts', function(Request $request, Response $response){
+        $response->getBody()->write("lista de posts");        
+        return $response;
+    });
+
+    $app->post('/usuarios/add', function(Request $request, Response $response){       
+
+        //recupera post
+        $post = $request->getParsedBody();
+        $nome = $post['nome'];
+        $email = $post['email'];
+
+        return $response->getBody()->write($nome);
+    });
+    
+    $app->put('/usuarios/edit', function(Request $request, Response $response) {
+        $post = $request->getParsedBody();
+        $id = $post['id'];
+        $nome = $post['nome'];
+
+        return $response->getBody()->write("Sucesso ao atualizar o id: " . $id);
+    });
+
+
+    $app->delete('/usuarios/remove/{id}', function(Request $request, Response $response) {
+        $id = $request->getAttribute('id');
+        
+        return $response->getBody()->write("Sucesso ao remover o id: " . $id);
+    });
 
     $app->run();
-
-
-
-
-
-
 
 
 
