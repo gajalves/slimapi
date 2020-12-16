@@ -5,9 +5,32 @@
     use Slim\Factory\AppFactory;
 
     require __DIR__ . '/vendor/autoload.php';
+    require 'class.php';
 
     $app = new Slim\App;
-    
+
+    //$servico = new Servico;
+
+    //injeção de dependencia
+    //container pimple
+    $container = $app->getContainer();
+    $container['servico'] = function() {
+        return new Servico;
+    };
+
+    $app->get('/servico', function(Request $request, Response $response) {       
+      $servico = $this->get('servico');
+      var_dump($servico);
+        
+    });
+
+
+    $app->run();
+
+
+
+
+    /*
     //padrao psr7
     $app->get('/postagens', function(Request $request, Response $response){       
         $response->getBody()->write("lista essa porra");        
@@ -38,21 +61,12 @@
         return $response->getBody()->write("Sucesso ao atualizar o id: " . $id);
     });
 
-
     $app->delete('/usuarios/remove/{id}', function(Request $request, Response $response) {
         $id = $request->getAttribute('id');
         
         return $response->getBody()->write("Sucesso ao remover o id: " . $id);
-    });
-
-    $app->run();
-
-
-
-
-
-
-
+    }); */
+    
     // // $app->get('/json', function(){
     // //     $data = ['name' => 'gabriel', 'age' => '22'];
     // //     echo json_encode($data);
