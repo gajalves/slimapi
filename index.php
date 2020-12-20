@@ -25,6 +25,11 @@
     });
 
 
+    /** Controllers como serviço */
+    $app->get('/usuario', '\MyApp\controllers\Home:Index');
+
+
+
     $app->run();
 
 
